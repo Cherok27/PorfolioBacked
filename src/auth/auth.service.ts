@@ -39,6 +39,7 @@ export class AuthService {
     return 'This action adds a new auth';
   }
   async login(loginUserDto: LoginUserDto) {
+    console.log(loginUserDto);
     const { email, pasword } = loginUserDto;
     const user = await this.userRepository.findOne({
       where: { email },

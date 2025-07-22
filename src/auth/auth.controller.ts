@@ -19,7 +19,8 @@ export class AuthController {
   loginUser(@Body() loginUserDto: LoginUserDto) {
     return this.authService.login(loginUserDto);
   }
-  @Get('check-status') // Esto lo usamos para que los de frontend tenga conque verificar cada vez que los usarios refrescan y asi no tener que hacer login
+  @Get('check-status')
+  @Auth() // Esto lo usamos para que los de frontend tenga conque verificar cada vez que los usarios refrescan y asi no tener que hacer login
   checkAuthStatus(@GetUser() user: User) {
     return this.authService.checkAuthStatus(user);
   }
