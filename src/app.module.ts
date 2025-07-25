@@ -9,6 +9,10 @@ import { SeedModule } from './seed/seed.module';
     AuthModule,
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
+      ssl: process.env.STAGE === 'prod' ? true : false,
+      extra: {
+        ssl: process.env.STAGE == 'prod' ? { rejectUnauthorized: false } : null,
+      },
       type: 'postgres',
       host: process.env.DB_HOST,
       port: +(process.env.DB_PORT || 5432),
@@ -16,7 +20,7 @@ import { SeedModule } from './seed/seed.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       autoLoadEntities: true,
-      synchronize: true, // Note: Set to false in production
+      synchronize: true,
     }),
     SeedModule,
   ],
