@@ -6,16 +6,36 @@ import { User } from './entities/users.entity';
 import { Auth, GetUser, RoleProtected } from './decorators';
 import { AuthGuard } from '@nestjs/passport';
 import { ValidRole } from './interfaces';
+import { ApiResponse } from '@nestjs/swagger';
+import { LoginUserResponseDto } from './dtoResponse/login-userResponse';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
+  @ApiResponse({
+    status: 201,
+    description: 'User was created',
+    type: User,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad request',
+  })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden Token related.',
+  })
   createUser(@Body() createAuthDto: CreateUserDto) {
     return this.authService.create(createAuthDto);
   }
   @Post('login')
+  @ApiResponse({
+    status: 201,
+    description: 'Logueado correctamente',
+    type: LoginUserResponseDto,
+  })
   loginUser(@Body() loginUserDto: LoginUserDto) {
     return this.authService.login(loginUserDto);
   }
@@ -35,6 +55,11 @@ export class AuthController {
     };
   }
   @Get('users')
+  @ApiResponse({
+    status: 200,
+    description: 'Get users',
+    type: [User],
+  })
   @Auth(ValidRole.admin, ValidRole.superUser)
   getAllUsers() {
     return this.authService.getAllUsers();

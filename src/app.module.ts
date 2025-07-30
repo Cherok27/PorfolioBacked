@@ -3,6 +3,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SeedModule } from './seed/seed.module';
+import { MessagesWsModule } from './messages-ws/messages-ws.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { SeedModule } from './seed/seed.module';
       synchronize: true,
     }),
     SeedModule,
+    MessagesWsModule,
   ],
   controllers: [],
   providers: [],
